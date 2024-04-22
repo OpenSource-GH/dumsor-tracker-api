@@ -7,6 +7,7 @@ The Dumsor Tracker API project aims to monitor and analyze power outage patterns
 - Next.js with TypeScript
 - Node.js with Express
 
+
 ### Application Workflow
 - Authentication: The application does not require authentication. Users can submit data without creating an account.
 
@@ -15,3 +16,7 @@ The Dumsor Tracker API project aims to monitor and analyze power outage patterns
   - Power Status: Whether the user has electricity or not.
 
 This streamlined approach will allow for easy data submission and help in tracking and analyzing power outage trends effectively.
+
+## Contributing
+Please read our [Contribution Guidelines](contributing/CONTRIBUTING.md) before contributing to the project.
+
