@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
+const moment = require('moment');
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -9,7 +10,7 @@ const userSchema = new mongoose.Schema({
   },
   location: {
     type: String,
-    default: ""
+    default: ''
   },
   password: {
     type: String,
