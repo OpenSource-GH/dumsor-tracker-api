@@ -1,14 +1,17 @@
-# Dumsor Tracker API
+## Dumsor Tracker API
 
-### About
-We're building this project to track the pattern of power outages across the country.
+### Overview
+The Dumsor Tracker API project aims to monitor and analyze power outage patterns across the country.
 
-### Stack
-- NextJS + TypeScript
-- Node + Express
+### Technology Stack
+- Next.js with TypeScript
+- Node.js with Express
 
-### App Flow
-- Authentication: There will be no authentication. Users can provide data without having an account.
-- When your power it cut off, simply visit the app, and provide the following details:
-    - Your location
-    - Power Status: Do you have light or not?
+### Application Workflow
+- Authentication: The application does not require authentication. Users can submit data without creating an account.
+
+- Reporting Power Outages: Users can report power outages by visiting the application and providing the following details:
+  - Location
+  - Power Status: Whether the user has electricity or not.
+
+This streamlined approach will allow for easy data submission and help in tracking and analyzing power outage trends effectively.
