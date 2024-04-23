@@ -3,12 +3,6 @@ const { Number } = require('twilio/lib/twiml/VoiceResponse');
 const validator = require('validator');
 
 const userSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-
   email: {
     type: String,
     trim: true,
@@ -27,8 +21,9 @@ const userSchema = new mongoose.Schema({
     type: Number,
   },
 
-  authOTP: {
+  otp: {
     type: Number,
+    default: null,
   },
 
   location: {

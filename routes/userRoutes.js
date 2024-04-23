@@ -6,8 +6,12 @@ const userRouter = express.Router();
 userRouter.get('/get-all-users', userController.getAllUsers);
 
 userRouter.post('/register/email', userController.signupWithEmailPassword);
+userRouter.post('/login/email', userController.loginWithEmailAndPassword);
+
 userRouter.post('/register/phone', userController.signupWithPhoneNumberOTP);
-userRouter.post('/register/phone/verify', userController.verifyOTP);
+userRouter.post('/register/phone/verify', userController.verifyOTPAndSignup);
+userRouter.post('/login/phone', userController.loginWithPhoneAndOTP);
+userRouter.post('/login/phone/verify', userController.verifyOTPAndLogin);
 
 
 
