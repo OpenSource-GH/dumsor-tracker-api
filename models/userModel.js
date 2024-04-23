@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 const moment = require('moment');
+const {PhoneNumberUtil } = require('libphonenumber-js');
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -10,11 +11,29 @@ const userSchema = new mongoose.Schema({
   },
   location: {
     type: String,
+    required: true,
     default: ''
   },
   password: {
     type: String,
     required: true
+  },
+  phoneNumber: {
+    type: String,
+    required: true,
+    minlength: 10,
+    validate: {
+      validator: function(value) {
+        try {
+          const phoneUtil = PhoneNumberUtil.getInstance();
+          const phoneNumber = phoneUtil.parseAndKeepRawInput(value, 'GH');
+          return phoneUtil.isValidNumber(phoneNumber);
+        } catch (error) {
+          return false; 
+        }
+      },
+      message: 'Invalid phone number format'
+    }
   },
   outages: [{
     date: {
