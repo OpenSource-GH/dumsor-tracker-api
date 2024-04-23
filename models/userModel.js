@@ -38,7 +38,20 @@ const userSchema = new mongoose.Schema({
   },
 
   phoneNumber: {
-    type: Number,
+    type: String,
+    minlength: 10,
+    validate: {
+      validator: function (value) {
+        try {
+          const phoneUtil = PhoneNumberUtil.getInstance();
+          const phoneNumber = phoneUtil.parseAndKeepRawInput(value, 'GH');
+          return phoneUtil.isValidNumber(phoneNumber);
+        } catch (error) {
+          return false;
+        }
+      },
+      message: 'Invalid phone number format',
+    },
   },
 
   otp: {
