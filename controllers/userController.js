@@ -1,11 +1,12 @@
+/* eslint-disable no-unused-vars */
 const User = require('./../models/userModel');
 
 exports.createUser = (req, res) => {
-    res.status(500).json({
-      status: 'error',
-      message: 'this route is not defined yet',
-    });
-  };
+  res.status(500).json({
+    status: 'error',
+    message: 'this route is not defined yet',
+  });
+};
 
 exports.createUser = (req, res) => {
   res.status(500).json({
