@@ -1,0 +1,52 @@
+[
+    {
+      "location": "Main Office",
+      "outages": [
+        {
+          "date": "2024-04-23",
+          "timeOff": "2024-04-23 10:30:00",
+          "timeBackOn": "2024-04-23 11:00:00"
+        },
+        {
+          "date": "2024-04-22",
+          "timeOff": "2024-04-22 15:45:00",
+          "timeBackOn": "2024-04-22 16:15:00"
+        }
+      ]
+    },
+    {
+      "location": "Data Center",
+      "outages": [
+        {
+          "date": "2024-04-23",
+          "timeOff": "2024-04-23 08:15:00",
+          "timeBackOn": "2024-04-23 08:30:00"
+        }
+      ]
+    },
+    {
+      "location": "Warehouse",
+      "outages": [
+        {
+          "date": "2024-04-23",
+          "timeOff": "2024-04-23 09:45:00",
+          "timeBackOn": "2024-04-23 10:00:00"
+        },
+        {
+          "date": "2024-04-23",
+          "timeOff": "2024-04-23 13:20:00",
+          "timeBackOn": "2024-04-23 13:40:00"
+        },
+        {
+          "date": "2024-04-23",
+          "timeOff": "2024-04-23 16:00:00",
+          "timeBackOn": "2024-04-23 16:15:00"
+        }
+      ]
+    },
+    {
+      "location": "Office Building",
+      "outages": []
+    }
+  ]
+  
