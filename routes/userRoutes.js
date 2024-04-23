@@ -6,7 +6,7 @@ const userRouter = express.Router();
 
 userRouter
   .route('/')
-  .get(userController.getUser)
+  .get(userController.getAllUsers)
   .post(userController.createUser);
 
 userRouter

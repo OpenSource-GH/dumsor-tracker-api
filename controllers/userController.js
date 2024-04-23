@@ -1,6 +1,6 @@
 const User = require('./../models/userModel');
 
-exports.createUser = (req, res) => {
+exports.getAllUsers = (req, res) => {
     res.status(500).json({
       status: 'error',
       message: 'this route is not defined yet',
