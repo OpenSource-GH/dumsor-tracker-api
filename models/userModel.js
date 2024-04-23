@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
   },
   email: {
     type: String,
-    required: [true, 'Provide your email address'],
+    required: ['Provide your email address'],
     unique: true,
     lowercase: true,
     validate: [validator.isEmail, 'Provide a valid or unique email'],
@@ -36,7 +36,6 @@ const userSchema = new mongoose.Schema({
   },
   phoneNumber: {
     type: String,
-    required: true,
     minlength: 10,
     validate: {
       validator: function (value) {
