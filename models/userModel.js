@@ -6,6 +6,10 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     trim: true,
+    // required: ['Provide your email address'],
+    unique: true,
+    lowercase: true,
+    validate: [validator.isEmail, 'Provide a valid or unique email'],
     match: [
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
       'Please enter a valid email',
@@ -14,10 +18,26 @@ const userSchema = new mongoose.Schema({
 
   password: {
     type: String,
-    minLength: [6, 'Password must be up to 6 characters'],
+    minLength: [8, 'Password must be up to 8 characters'],
+    type: String,
+    // required: [true, 'Provide your password'],
+    select: false,
   },
 
-  phone: {
+  passwordConfirm: {
+    type: String,
+    // required: true,
+    select: false,
+    validate: {
+      // Only works on CREATE and SAVE
+      validator: function (val) {
+        return val === this.password;
+      },
+      message: 'Passwords do not match! Please try again.',
+    },
+  },
+
+  phoneNumber: {
     type: Number,
   },
 
@@ -26,48 +46,33 @@ const userSchema = new mongoose.Schema({
     default: null,
   },
 
-  location: {
-    type: String,
-    default: '',
+  otpExpiresAt: {
+    type: Date,
+    select: false,
   },
 
-  outages: [
-    {
-      date: {
-        type: Date,
-        required: true,
-      },
+  isEmailVerified: {
+    type: Boolean,
+    default: false,
+  },
 
-      timeOff: {
-        type: String,
-        required: true,
-        validate: {
-          validator: function (v) {
-            return moment(v, 'YYYY-MM-DD HH:mm:ss').isAfter(
-              moment().subtract(1, 'minute'),
-            );
-          },
-          message: 'Power outage time off must be in the future',
-        },
-      },
-
-      timeBackOn: {
-        type: String,
-        required: true,
-        validate: {
-          validator: function (v, outage) {
-            const timeOff = moment(outage.timeOff, 'YYYY-MM-DD HH:mm:ss');
-            return moment(v, 'YYYY-MM-DD HH:mm:ss').isAfter(timeOff);
-          },
-          message: 'Power back on time must be after power off time',
-        },
-      },
-    },
-  ],
+  isPhoneVerified: {
+    type: Boolean,
+    default: false,
+  },
 });
 
-userSchema.pre('save', function (next) {
-  next();
+// To Encrypt password before saving to the Database
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) {
+    return next();
+  } else {
+    // To Hash the password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(this.password, salt);
+    this.password = hashedPassword;
+    next();
+  }
 });
 
 const User = mongoose.model('User', userSchema);

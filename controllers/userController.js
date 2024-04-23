@@ -12,13 +12,13 @@ const twilioClient = require('twilio')(
 
 let generatedOTP;
 // Function to generate OTP and send message
-const generateAndSendOTP = async (phone) => {
+const generateAndSendOTP = async (phoneNumber) => {
   // Generate OTP
   generatedOTP = Math.floor(100000 + Math.random() * 900000); // To generate a 6-digit random number
   // Send OTP to the provided phone number
   await twilioClient.messages.create({
     from: process.env.TWILIO_PHONE_NUMBER,
-    to: phone,
+    to: phoneNumber,
     body: `Your OTP verification for Dumsor Tracker is ${generatedOTP}!`,
   });
 
@@ -32,33 +32,38 @@ const generateToken = (id) => {
 
 // For user to create an account with email and password
 exports.signupWithEmailPassword = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, passwordConfirm } = req.body;
 
   try {
-    if (!email || !password) {
+    if (!email || !password || !passwordConfirm) {
       res.status(400);
       throw new Error('Please fill in all the required fields!');
     }
 
-    if (password.length < 6) {
-      res.status(400);
-      throw new Error('Password must be up to 6 characters');
-    }
-
-    // To if email already registered
+    // To check if email has already registered
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       res.status(400);
       throw new Error('Email has already been registered!');
     }
 
+    if (password.length < 8) {
+      res.status(400);
+      throw new Error('Password must be up to 8 characters');
+    }
+
+    if (password !== passwordConfirm) {
+      return res.status(400).json('Passwords do not match!');
+    }
+
     // To hash the user password
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = bcrypt.hashSync(password, 10);
 
     // To create a new user
-    const newUser = await User.create({
+    const newUser = new User({
       email,
       password: hashedPassword,
+      passwordConfirm: hashedPassword,
     });
     // To generate a token
     const token = generateToken(newUser._id);
@@ -85,25 +90,25 @@ exports.signupWithEmailPassword = async (req, res) => {
 
 // For user to create an account with phone number and OTP
 exports.signupWithPhoneNumberOTP = async (req, res) => {
-  const { phone } = req.body;
+  const { phoneNumber } = req.body;
 
   try {
     // Validate input fields
-    if (!phone) {
+    if (!phoneNumber) {
       return res
         .status(400)
         .json({ error: 'Please fill in all the required fields!' });
     }
 
     // To check if phone number is already registered
-    const existingUser = await User.findOne({ phone });
+    const existingUser = await User.findOne({ phoneNumber });
     if (existingUser) {
       return res
         .status(400)
         .json({ error: 'Phone number has already been registered!' });
     }
     //  To generate OTP
-    generatedOTP = await generateAndSendOTP(phone);
+    generatedOTP = await generateAndSendOTP(phoneNumber);
     // console.log(generatedOTP);
     res.status(201).json({ message: 'Please verify OTP' });
   } catch (error) {
@@ -119,7 +124,7 @@ exports.signupWithPhoneNumberOTP = async (req, res) => {
 exports.verifyOTPAndSignup = async (req, res) => {
   try {
     // console.log(req.body);
-    const { phone, otp } = req.body;
+    const { phoneNumber, otp } = req.body;
 
     // To check if the provided OTP matches the generated OTP
     if (otp !== generatedOTP) {
@@ -128,11 +133,11 @@ exports.verifyOTPAndSignup = async (req, res) => {
     // console.log(generatedOTP);
 
     // To save phoneNumber and OTP in the user document
-    const newUser = await User.create({ phone, otp: generatedOTP });
+    const newUser = await User.create({ phoneNumber, otp: generatedOTP });
 
     const token = generateToken(newUser._id);
     if (newUser) {
-      const { _id, phone } = newUser;
+      const { _id, phoneNumber } = newUser;
       res.cookie('token', token, {
         path: '/',
         httpOnly: true,
@@ -141,7 +146,7 @@ exports.verifyOTPAndSignup = async (req, res) => {
       // To send the user data
       res.status(201).json({
         _id,
-        phone,
+        phoneNumber,
       });
     }
   } catch (error) {
@@ -188,22 +193,22 @@ exports.loginWithEmailAndPassword = async (req, res) => {
 
 // Login with Phone Number and OTP
 exports.loginWithPhoneAndOTP = async (req, res) => {
-  const { phone } = req.body;
+  const { phoneNumber } = req.body;
 
   try {
     // To validate input fields!
-    if (!phone) {
+    if (!phoneNumber) {
       return res.status(400).json({ error: 'Please provide phone number!' });
     }
 
     // To check if the user exist
-    const existingUser = await User.findOne({ phone });
+    const existingUser = await User.findOne({ phoneNumber });
     if (!existingUser) {
       return res.status(404).json({ error: 'User not found, please sign up!' });
     }
 
     //  To generate OTP for login
-    generatedOTP = await generateAndSendOTP(phone);
+    generatedOTP = await generateAndSendOTP(phoneNumber);
     console.log('Login OTP:', generatedOTP);
 
     res.status(200).json({ message: 'OTP has been sent for login!' });
@@ -216,7 +221,7 @@ exports.loginWithPhoneAndOTP = async (req, res) => {
 exports.verifyOTPAndLogin = async (req, res) => {
   try {
     // console.log(req.body);
-    const { phone, otp } = req.body;
+    const { phoneNumber, otp } = req.body;
 
     // To check if the provided OTP matches the generated OTP
     if (otp !== generatedOTP) {
@@ -225,11 +230,11 @@ exports.verifyOTPAndLogin = async (req, res) => {
     console.log('Login OTP:', generatedOTP);
 
     // To save phoneNumber and OTP in the user document
-    const user = await User.findOne({ phone });
+    const user = await User.findOne({ phoneNumber });
 
     const token = generateToken(user._id);
     if (user) {
-      const { _id, phone } = user;
+      const { _id, phoneNumber } = user;
       res.cookie('token', token, {
         path: '/',
         httpOnly: true,
@@ -238,7 +243,7 @@ exports.verifyOTPAndLogin = async (req, res) => {
       // To send the user data
       res.status(201).json({
         _id,
-        phone,
+        phoneNumber,
       });
     }
   } catch (error) {
@@ -246,8 +251,6 @@ exports.verifyOTPAndLogin = async (req, res) => {
     console.log(error);
   }
 };
-
-
 
 exports.getAllUsers = async (req, res) => {
   res.status(500).json({
