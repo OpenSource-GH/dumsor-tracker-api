@@ -94,7 +94,7 @@ exports.updateLog = catchAsync(async (req, res, next) => {
     if (!log) {
       return res.status(404).json({
         status: 'fail',
-        message: 'Blog not found',
+        message: 'log not found',
       });
     }
     res.status(200).json({
