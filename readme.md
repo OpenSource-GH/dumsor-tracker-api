@@ -9,7 +9,7 @@ The Dumsor Tracker API project aims to monitor and analyze power outage patterns
 
 
 ### Application Workflow
-- Authentication: The application does not require authentication. Users can submit data without creating an account.
+- Authentication: The application will require authentication. Users can view data without creating an account, but will have to create one to post data.
 
 - Reporting Power Outages: Users can report power outages by visiting the application and providing the following details:
   - Location
