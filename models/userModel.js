@@ -21,17 +21,17 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Provide your password'],
     minlength: 8,
-    select: false
+    select: false,
   },
   passwordConfirm: {
     type: String,
     required: [true, 'Confirm your password'],
     validate: {
       // Only works on CREATE and SAVE
-      validator: function(el) {
+      validator: function (el) {
         return el === this.password;
       },
-      message: 'Passwords are not the same'
+      message: 'Passwords are not the same',
     },
   },
   phoneNumber: {
@@ -39,46 +39,35 @@ const userSchema = new mongoose.Schema({
     required: true,
     minlength: 10,
     validate: {
-      validator: function(value) {
+      validator: function (value) {
         try {
           const phoneUtil = PhoneNumberUtil.getInstance();
           const phoneNumber = phoneUtil.parseAndKeepRawInput(value, 'GH');
           return phoneUtil.isValidNumber(phoneNumber);
         } catch (error) {
-          return false; 
+          return false;
         }
       },
-      message: 'Invalid phone number format'
-    }
+      message: 'Invalid phone number format',
+    },
   },
-  outages: [{
-    date: {
-      type: Date,
-      required: true
-    },
-    timeOff: {
-      type: String,
-      required: true,
-      validate: {
-        validator: function(v) {
-          return moment(v, 'YYYY-MM-DD HH:mm:ss').isAfter(moment().subtract(1, 'minute'));
-        },
-        message: 'Power outage time off must be in the future'
-      }
-    },
-    timeBackOn: {
-      type: String,
-      required: true,
-      validate: {
-        validator: function(v, outage) {
-          const timeOff = moment(outage.timeOff, 'YYYY-MM-DD HH:mm:ss');
-          return moment(v, 'YYYY-MM-DD HH:mm:ss').isAfter(timeOff);
-        },
-        message: 'Power back on time must be after power off time'
-      }
-    }
-  }]
-}); 
+  otp: {
+    type: String,
+    select: false,
+  },
+  otpExpiresAt: {
+    type: Date,
+    select: false,
+  },
+  isEmailVerified: {
+    type: Boolean,
+    default: false,
+  },
+  isPhoneVerified: {
+    type: Boolean,
+    default: false,
+  },         
+});
 
 userSchema.pre('save', function (next) {
   next();
