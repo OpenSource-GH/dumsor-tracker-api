@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const validator = require('validator');
 const moment = require('moment');
 
 const logSchema = new mongoose.Schema({
@@ -23,9 +22,9 @@ const logSchema = new mongoose.Schema({
         type: String,
         required: true,
         validate: {
-          validator: function (v) {
+          validator: function(v) {
             return moment(v, 'YYYY-MM-DD HH:mm:ss').isAfter(
-              moment().subtract(1, 'minute'),
+              moment().subtract(1, 'minute')
             );
           },
           message: 'Power outage time off must be in the future',
@@ -35,7 +34,7 @@ const logSchema = new mongoose.Schema({
         type: String,
         required: true,
         validate: {
-          validator: function (v, outage) {
+          validator: function(v, outage) {
             const timeOff = moment(outage.timeOff, 'YYYY-MM-DD HH:mm:ss');
             return moment(v, 'YYYY-MM-DD HH:mm:ss').isAfter(timeOff);
           },
@@ -44,6 +43,10 @@ const logSchema = new mongoose.Schema({
       },
     },
   ],
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: [true, 'A Log must have a creator id'],
+  },
 });
 
 const Log = mongoose.model('Log', logSchema);
