@@ -3,8 +3,7 @@ const mongoose = require('mongoose');
 const LogRouter = require('../routes/logRoutes');
 const Log = require('../models/logModel');
 const { Types } = require('mongoose');
-const filePath =
-  '/Users/mac/Desktop/BE/dumsor-tracker-api/dev-data/logs-simple.json';
+const filePath = './dev-data/logs-simple.json';
 const logs = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
 const catchAsync = require('./../utils/catchAsync');
 

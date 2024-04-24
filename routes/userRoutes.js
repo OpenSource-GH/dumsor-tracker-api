@@ -1,8 +1,10 @@
 const express = require('express');
 const userController = require('./../controllers/userController');
+const {
+  validateObjectId,
+} = require('../middlewares/validateObjectIdMiddleware.js');
 
 const userRouter = express.Router();
-
 
 userRouter
   .route('/')
@@ -11,8 +13,8 @@ userRouter
 
 userRouter
   .route('/:id')
-  .get(userController.getUser)
-  .patch(userController.updateUser)
-  .delete(userController.deleteUser);
+  .get(validateObjectId, userController.getUser)
+  .patch(validateObjectId, userController.updateUser)
+  .delete(validateObjectId, userController.deleteUser);
 
 module.exports = userRouter;
