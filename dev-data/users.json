@@ -1,0 +1,48 @@
+[
+    {
+      "name": "Kwame Gyamfi",
+      "email": "jennifer@example.com",
+      "password": "$2a$12$XCXvvlhRBJ8CydKH09v1v.jpg0hB9gVVfMVEoz4MsxqL9zb5PrF42"
+    },
+    {
+      "name": "Eliana Shirrer",
+      "email": "eliana@example.com",
+      "password": "$2a$12$Jb/ILhdDV.ZpnPMu19xfe.NRh5ntE2LzNMNcsty05QWwRbmFFVMKO"
+    },
+    {
+      "name": "Steve Arye",
+      "email": "steve@example.com",
+      "password": "$2a$12$q7v9dm.S4DvqhAeBc4KwduedEDEkDe2GGFGzteW6xnHt120oRpkqm"
+    },
+    {
+      "name": "Aarav Arye",
+      "email": "aarav@example.com",
+      "password": "$2a$12$lKWhzujFvQwG4m/X3mnTneOB3ib9IYETsOqQ8aN5QEWDjX6X2wJJm"
+    },
+    {
+      "name": "Miyah Myles",
+      "email": "miyah@example.com",
+      "password": "$2a$12$.XIvvmznHQSa9UOI639yhe4vzHKCYO1vpTUZc4d45oiT4GOZQe1kS"
+    },
+    {
+      "name": "Ben Simmons",
+      "email": "ben@example.com",
+      "password": "$2a$12$D3fyuS9ETdBBw5lOwceTMuZcDTyVq28ieeGUAanIuLMcSDz6bpfIe"
+    },
+    {
+      "name": "Max Smith",
+      "email": "max@example.com",
+      "password": "$2a$12$l5qamwqcqC2NlgN6o5A5..9Fxzr6X.bjx/8j3a9jYUHWGOL99oXlm"
+    },
+    {
+      "name": "Isabel Kirkland",
+      "email": "isabel@example.com",
+      "password": "$2a$12$IUnwPH0MGFeMuz7g4gtfvOll.9wgLyxG.9C3TKlttfLtCQWEE6GIu"
+    },
+    {
+      "name": "Alexander Jones",
+      "email": "alex@example.com",
+      "password": "$2a$12$NnclhoYFNcSApoQ3ML8kk.b4B3gbpOmZJLfqska07miAnXukOgK6y"
+    }
+  ]
+  
