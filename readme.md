@@ -25,7 +25,9 @@ The Dumsor Tracker API project aims to monitor and analyze power outage patterns
 
 2. Navigate to the project directory:
    
-  ```cd dumsor-tracker-api```
+  ```
+javascript
+cd dumsor-tracker-api```
 
 4. Install Dependencies
    
