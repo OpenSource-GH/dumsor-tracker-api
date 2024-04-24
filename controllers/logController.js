@@ -1,18 +1,18 @@
-const fs = require("fs");
-const mongoose = require("mongoose");
-const LogRouter = require("../routes/logRoutes");
-const Log = require("../models/logModel");
-const { Types } = require("mongoose");
+const fs = require('fs');
+const mongoose = require('mongoose');
+const LogRouter = require('../routes/logRoutes');
+const Log = require('../models/logModel');
+const { Types } = require('mongoose');
 const filePath =
-  "/Users/mac/Desktop/BE/dumsor-tracker-api/dev-data/logs-simple.json";
-const logs = JSON.parse(fs.readFileSync(filePath, "utf-8"));
-const catchAsync = require("./../utils/catchAsync");
+  '/Users/mac/Desktop/BE/dumsor-tracker-api/dev-data/logs-simple.json';
+const logs = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+const catchAsync = require('./../utils/catchAsync');
 
 exports.checkID = (req, res, next) => {
   if (req.params.id * 1 > logs.length) {
     return res.status(404).json({
-      status: "fail",
-      message: "Invalid ID",
+      status: 'fail',
+      message: 'Invalid ID',
     });
   }
   next();
@@ -35,7 +35,7 @@ exports.getAllLogs = catchAsync(async (req, res, next) => {
 
     // Send response with pagination information
     res.status(200).json({
-      status: "Success",
+      status: 'Success',
       data: {
         results: logs.length,
         logs,
@@ -46,7 +46,7 @@ exports.getAllLogs = catchAsync(async (req, res, next) => {
     });
   } catch (err) {
     res.status(404).json({
-      status: "fail",
+      status: 'fail',
       message: err.message,
     });
   }
@@ -57,19 +57,19 @@ exports.getLog = catchAsync(async (req, res, next) => {
     const log = await Log.findById(req.params.id);
     if (!log) {
       return res.status(404).json({
-        status: "fail",
-        message: "Log not found",
+        status: 'fail',
+        message: 'Log not found',
       });
     }
     res.status(200).json({
-      status: "success",
+      status: 'success',
       data: {
         log,
       },
     });
   } catch (error) {
     res.status(500).json({
-      status: "error",
+      status: 'error',
       message: error.message,
     });
   }
@@ -88,7 +88,7 @@ exports.createLog = catchAsync(async (req, res, next) => {
     });
     newLog.save().then((result) => {
       res.status(201).json({
-        status: "Success",
+        status: 'Success',
         data: {
           log: result,
         },
@@ -96,7 +96,7 @@ exports.createLog = catchAsync(async (req, res, next) => {
     });
   } catch (err) {
     res.status(400).json({
-      status: "fail",
+      status: 'fail',
       message: err.message,
     });
   }
@@ -107,19 +107,19 @@ exports.updateLog = catchAsync(async (req, res, next) => {
     const log = await Log.findByIdAndUpdate(req.params.id, req.body);
     if (!log) {
       return res.status(404).json({
-        status: "fail",
-        message: "log not found",
+        status: 'fail',
+        message: 'log not found',
       });
     }
     res.status(200).json({
-      status: "success",
+      status: 'success',
       data: {
         log,
       },
     });
   } catch (err) {
     res.status(400).json({
-      status: "fail",
+      status: 'fail',
       message: err.message,
     });
   }
@@ -130,17 +130,17 @@ exports.deleteLog = catchAsync(async (req, res, next) => {
     const log = await Log.findByIdAndDelete(req.params.id);
     if (!log) {
       return res.status(404).json({
-        status: "fail",
-        message: "Log not found",
+        status: 'fail',
+        message: 'Log not found',
       });
     }
     res.status(200).json({
-      status: "success",
+      status: 'success',
       data: null,
     });
   } catch (err) {
     res.status(400).json({
-      status: "fail",
+      status: 'fail',
       message: err.message,
     });
   }
