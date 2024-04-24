@@ -23,7 +23,7 @@ The Dumsor Tracker API project aims to monitor and analyze power outage patterns
 git clone https://https://github.com/OpenSource-GH/dumsor-tracker-api.git
 
 2. Navigate to the project directory:
-cd dumsor-tracker-api
+`cd dumsor-tracker-api`
 
 3. 
 
