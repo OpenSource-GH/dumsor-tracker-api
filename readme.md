@@ -24,9 +24,11 @@ The Dumsor Tracker API project aims to monitor and analyze power outage patterns
 git clone https://https://github.com/OpenSource-GH/dumsor-tracker-api.git
 
 2. Navigate to the project directory:
+   
 `cd dumsor-tracker-api`
 
-3. Install Dependencies
+4. Install Dependencies
+   
 `npm install`
 
 # Configuration
@@ -40,6 +42,7 @@ Create a .env file in the project root directory. Add the following environment 
 Fetch your Supabase project's URL and Anon key from the Supabase dashboard. Set the following environment variables in your .env file:
 
 `SUPABASE_URL=<your_supabase_url>`
+
 `SUPABASE_ANON_KEY=<your_supabase_anon_key>`
 
 ### Application Workflow
