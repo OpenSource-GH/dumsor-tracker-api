@@ -5,7 +5,8 @@ The Dumsor Tracker API project aims to monitor and analyze power outage patterns
 
 ### Technology Stack
 - Node.js with Express
-- Supabase (BaaS).
+- MongoDB (Primary DB)
+- Supabase (BaaS - for auth).
 
 ### Features
 -  Track power outages and durations.
@@ -25,10 +26,21 @@ git clone https://https://github.com/OpenSource-GH/dumsor-tracker-api.git
 2. Navigate to the project directory:
 `cd dumsor-tracker-api`
 
-3. 
+3. Install Dependencies
+`npm install`
 
+### Configuration
+1. # MongoDB Connection:
 
+Create a .env file in the project root directory. Add the following environment variable, replacing `<your_mongo_uri>` with your actual MongoDB connection URL:
+`MONGODB_URI=<your_mongo_uri>`
 
+2. # Supabase Configuration:
+
+Fetch your Supabase project's URL and Anon key from the Supabase dashboard. Set the following environment variables in your .env file:
+
+`SUPABASE_URL=<your_supabase_url>`
+`SUPABASE_ANON_KEY=<your_supabase_anon_key>`
 
 ### Application Workflow
 - Authentication: The application will require authentication. Users can view data without creating an account, but will have to create one to post data.
@@ -46,5 +58,5 @@ This streamlined approach will allow for easy data submission and help in tracki
 
 
 ## Contributing
-Please read our [Contribution Guidelines](contributing/CONTRIBUTING.md) before contributing to the project.
+Contributions are welcome! Please read our [Contribution Guidelines](contributing/CONTRIBUTING.md) before contributing to the project.
 
