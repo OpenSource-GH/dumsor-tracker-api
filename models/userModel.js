@@ -65,12 +65,30 @@ const userSchema = new mongoose.Schema({
   isPhoneVerified: {
     type: Boolean,
     default: false,
-  },         
+  },
 });
 
-userSchema.pre('save', function (next) {
+// Middleware function to hash the user's password before saving
+// Runs before the 'save' operation on the user schema
+userSchema.pre('save', async function (next) {
+  const user = this;
+
+  if (user.isModified('password')) {
+    user.password = await bcrypt.hash(user.password, 8);
+  }
   next();
 });
+
+// Method to convert user object to JSON format
+// Removes the password field from the user object before sending to client
+userSchema.methods.toJSON = function () {
+  const user = this;
+  const userObject = user.toObject();
+  delete userObject.password;
+  delete userObject.tokens;
+
+  return userObject;
+};
 
 const User = mongoose.model('User', userSchema);
 
