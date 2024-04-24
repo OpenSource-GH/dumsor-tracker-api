@@ -10,6 +10,11 @@ const userSchema = new mongoose.Schema({
     required: [true, 'A user must have an id'],
     unique: true,
   },
+  name: {
+    type: String,
+    required: [true, 'Make your name  known'],
+    trim: true,
+  },
   email: {
     type: String,
     required: ['Provide your email address'],
