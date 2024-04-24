@@ -20,7 +20,13 @@ The Dumsor Tracker API project aims to monitor and analyze power outage patterns
 - Supabase project created.
 
 1. Clone the repository:
-git clone https://github.com/your-username/load-shedding-app.git
+git clone https://https://github.com/OpenSource-GH/dumsor-tracker-api.git
+
+2. Navigate to the project directory:
+cd dumsor-tracker-api
+
+3. 
+
 
 
 
