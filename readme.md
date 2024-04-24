@@ -4,7 +4,8 @@
 The Dumsor Tracker API project aims to monitor and analyze power outage patterns across the country.
 
 ### Technology Stack
-- Node.js with Express & Supabase (BaaS).
+- Node.js with Express
+- Supabase (BaaS).
 
 ### Features
 -  Track power outages and durations.
@@ -14,9 +15,12 @@ The Dumsor Tracker API project aims to monitor and analyze power outage patterns
 ### Setting Up
 
 # Prerequisites
-Node.js and npm installed on your machine.
-MongoDB instance set up and running.
-Supabase project created.
+- Node.js and npm installed on your machine.
+- MongoDB instance set up and running.
+- Supabase project created.
+
+1. Clone the repository:
+git clone https://github.com/your-username/load-shedding-app.git
 
 
 
