@@ -52,19 +52,8 @@ exports.getAllLogs = catchAsync(async (req, res, next) => {
 });
 
 exports.getLog = catchAsync(async (req, res, next) => {
-  const id = req.params.id;
-
-  const isValidObjectId = mongoose.Types.ObjectId.isValid(id);
-
-  if (!isValidObjectId) {
-    return res.status(400).json({
-      status: 'fail',
-      message: 'Invalid object Id',
-    });
-  }
-
   try {
-    const log = await Log.findById();
+    const log = await Log.findById(req.params.id);
     if (!log) {
       return res.status(404).json({
         status: 'fail',
