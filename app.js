@@ -16,7 +16,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/api/v1/blogs', logRouter);
+app.use('/api/v1/logs', logRouter);
 app.use('/api/v1/users', userRouter);
 
 module.exports = app;
