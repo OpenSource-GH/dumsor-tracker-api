@@ -45,6 +45,11 @@ Fetch your Supabase project's URL and Anon key from the Supabase dashboard. Set 
 
  `SUPABASE_ANON_KEY=<your_supabase_anon_key>`
 
+ 3. ### Run the Server
+
+ `npm start`
+
+
 ### Application Workflow
 - Authentication: The application will require authentication. Users can view data without creating an account, but will have to create one to post data.
 
