@@ -34,8 +34,8 @@ git clone https://https://github.com/OpenSource-GH/dumsor-tracker-api.git
 # Configuration
 1. ### MongoDB Connection:
 
-Create a .env file in the project root directory. Add the following environment variable, replacing `<your_mongo_uri>` with your actual MongoDB connection URL:
-`MONGODB_URI=<your_mongo_uri>`
+Create a .env file in the project root directory. Add the following environment variable, replacing `<your_mongo_url>` with your actual MongoDB connection URL:
+`MONGODB_URL=<your_mongo_url>`
 
 2. ### Supabase Configuration:
 
