@@ -25,29 +25,29 @@ The Dumsor Tracker API project aims to monitor and analyze power outage patterns
 
 2. Navigate to the project directory:
    
- `cd dumsor-tracker-api`
+  `cd dumsor-tracker-api`
 
 4. Install Dependencies
    
- `npm install`
+  `npm install`
 
 # Configuration
 1. ### MongoDB Connection:
 
 Create a .env file in the project root directory. Add the following environment variable, replacing `<your_mongo_url>` with your actual MongoDB connection URL:
- `MONGODB_URL=<your_mongo_url>`
+  `MONGODB_URL=<your_mongo_url>`
 
 2. ### Supabase Configuration:
 
 Fetch your Supabase project's URL and Anon key from the Supabase dashboard. Set the following environment variables in your .env file:
 
- `SUPABASE_URL=<your_supabase_url>`
+  `SUPABASE_URL=<your_supabase_url>`
 
- `SUPABASE_ANON_KEY=<your_supabase_anon_key>`
+  `SUPABASE_ANON_KEY=<your_supabase_anon_key>`
 
  3. ### Run the Server
 
- `npm start`
+   `npm start`
 
 
 ### Application Workflow
