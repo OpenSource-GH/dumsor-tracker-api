@@ -34,13 +34,11 @@ exports.signup = async (req, res, next) => {
 
 exports.login = async (req, res, next) => {
   const { email, password } = req.body;
-
   try {
     const { user, session, error } = await supabase.auth.signIn({
       email,
       password,
     });
-
     if (error) {
       return next(new AppError(error.message, 401));
     }
@@ -48,7 +46,6 @@ exports.login = async (req, res, next) => {
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
       expiresIn: process.env.JWT_EXPIRES_IN,
     });
-
     res.status(200).json({
       status: 'success',
       data: {
