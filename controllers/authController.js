@@ -1,54 +1,44 @@
-//const { promisify } = require('util');
 const jwt = require('jsonwebtoken');
 const User = require('./../models/userModel');
-//const catchAsync = require('./../utils/catchAsync');
-const supabase = require('@supabase/supabase-js');
+const AppError = require('./../utils/appError');
+const { createClient } = require('@supabase/supabase-js');
 
+const supabaseUrl = '';
+const supabaseAnonKey =
+  '';
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 exports.signup = async (req, res, next) => {
-  const { email, password } = req.body;
+  const { username, email, password, passwordConfirm } = req.body;
   try {
-    const { user, session, error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
     });
+
     if (error) {
-      return next(new AppError(error.message, 400));
+      return res.status(400).json({ error: error.message });
     }
-    // Generate JWT token for user (optional)
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-      expiresIn: process.env.JWT_EXPIRES_IN,
-    });
-    res.status(201).json({
-      status: 'success',
-      data: {
-        token,
-        user,
-      },
-    });
+
+    res.json({ user: data.user, session: data.session });
   } catch (err) {
     return next(new AppError('Failed to sign up user', 500));
   }
 };
 
 exports.login = async (req, res, next) => {
-  const { email, password } = req.body;
+  const { google } = req.body;
   try {
     const { user, session, error } = await supabase.auth.signIn({
-      email,
-      password,
+      google,
     });
     if (error) {
       return next(new AppError(error.message, 401));
     }
-    // Generate JWT token for user (optional)
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-      expiresIn: process.env.JWT_EXPIRES_IN,
-    });
     res.status(200).json({
       status: 'success',
       data: {
-        token,
+        session,
         user,
       },
     });
@@ -56,4 +46,3 @@ exports.login = async (req, res, next) => {
     return next(new AppError('Failed to log in user', 500));
   }
 };
-
