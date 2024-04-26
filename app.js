@@ -6,7 +6,7 @@ const userRouter = require('./routes/userRoutes.js');
 
 const app = express();
 
-const supabase = createClient('NODE_APP_SUBASE_URL', 'NODE_APP_ANON_KEY');
+const supabase = createClient('NODE_APP_SUPABASE_URL', 'NODE_APP_ANON_KEY');
 
 app.use(express.json());
 

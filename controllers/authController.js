@@ -2,8 +2,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('./../models/userModel');
 //const catchAsync = require('./../utils/catchAsync');
-const jwt = require('jsonwebtoken');
-const supabase = require('../supabase'); 
+const supabase = require('@supabase/supabase-js');
 
 
 exports.signup = async (req, res, next) => {
