@@ -6,7 +6,11 @@ const userRouter = require('./routes/userRoutes.js');
 
 const app = express();
 
-const supabase = createClient('NODE_APP_SUPABASE_URL', 'NODE_APP_ANON_KEY');
+const supabaseUrl = '';
+// console.log('SUPABASE_URL', supabaseUrl);
+const supabaseAnonKey = '';
+
+module.exports.supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 app.use(express.json());
 
@@ -22,6 +26,5 @@ app.use((req, res, next) => {
 
 app.use('/api/v1/logs', logRouter);
 app.use('/api/v1/users', userRouter);
-
 
 module.exports = app;
