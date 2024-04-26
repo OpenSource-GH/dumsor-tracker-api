@@ -1,6 +1,6 @@
 const express = require('express');
 const filePath =
-  '/Users/mac/Desktop/BE/dumsor-tracker-api/dev-data/logs-simple.json';
+  './dev-data/logs-simple.json';
 const { protect } = require('../middlewares/authMiddleware.js');
 const {
   validateObjectId,
