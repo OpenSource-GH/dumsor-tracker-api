@@ -2,14 +2,13 @@ const express = require('express');
 const filePath =
   './dev-data/logs-simple.json';
 const { protect } = require('../middlewares/authMiddleware.js');
-const {
-  validateObjectId,
-} = require('../middlewares/validateObjectIdMiddleware.js');
+
+const { checkID } = require('../middlewares/checkObjectIdMiddlware.js');
 
 const logController = require('./../controllers/logController');
 const logRouter = express.Router();
 
-logRouter.param('id', logController.checkID);
+logRouter.param('id', checkID);
 
 logRouter.route('/').get(protect, logController.getAllLogs).post(
   //logController.checkBody,
@@ -18,8 +17,8 @@ logRouter.route('/').get(protect, logController.getAllLogs).post(
 
 logRouter
   .route('/:id')
-  .get(validateObjectId, logController.getLog)
-  .patch(validateObjectId, logController.updateLog)
-  .delete(validateObjectId, logController.deleteLog);
+  .get(logController.getLog)
+  .patch(logController.updateLog)
+  .delete(logController.deleteLog);
 
 module.exports = logRouter;

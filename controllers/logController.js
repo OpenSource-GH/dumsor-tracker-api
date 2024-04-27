@@ -7,16 +7,6 @@ const filePath = './dev-data/logs-simple.json';
 const logs = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
 const catchAsync = require('./../utils/catchAsync');
 
-exports.checkID = (req, res, next) => {
-  if (req.params.id * 1 > logs.length) {
-    return res.status(404).json({
-      status: 'fail',
-      message: 'Invalid ID',
-    });
-  }
-  next();
-};
-
 exports.getAllLogs = catchAsync(async (req, res, next) => {
   // Set default values for page and pageSize
   const page = parseInt(req.query.page, 10) || 1;
