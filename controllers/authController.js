@@ -46,3 +46,19 @@ exports.login = async (req, res, next) => {
     return next(new AppError('Failed to log in user', 500));
   }
 };
+
+exports.logout = async (req, res, next) => {
+  try {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      return next(new AppError(error.message, 500));
+    }
+    res.status(200).json({
+      status: 'success',
+      message: 'User logged out successfully',
+    });
+  } catch (err) {
+    return next(new AppError('Failed to log out user', 500));
+  }
+};
+
