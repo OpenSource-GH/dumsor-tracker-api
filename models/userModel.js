@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
-const moment = require('moment');
 const { PhoneNumberUtil } = require('libphonenumber-js');
 
 const userSchema = new mongoose.Schema({
