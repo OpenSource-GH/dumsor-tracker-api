@@ -1,13 +1,13 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const app = require('./app');
-const { createClient } = require('@supabase/supabase-js');
+// const { createClient } = require('@supabase/supabase-js');
 
 dotenv.config({ path: './config.env' });
-
-const database_url = ''
-
-const DB = process.env.database_url;
+const DB = process.env.DATABASE.replace(
+  '<PASSWORD>',
+  process.env.DATABASE_PASSWORD,
+);
 mongoose
   .connect(DB, 
     {

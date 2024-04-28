@@ -1,15 +1,14 @@
-const jwt = require('jsonwebtoken');
 const User = require('./../models/userModel');
 const AppError = require('./../utils/appError');
 const { createClient } = require('@supabase/supabase-js');
 
 const supabaseUrl = '';
-const supabaseAnonKey =
+const supabaseAnonKey ='';
   '';
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 exports.signup = async (req, res, next) => {
-  const { username, email, password, passwordConfirm } = req.body;
+  const { email, password } = req.body;
   try {
     const { data, error } = await supabase.auth.signUp({
       email,
@@ -30,7 +29,7 @@ exports.login = async (req, res, next) => {
   const { google } = req.body;
   try {
     const { user, session, error } = await supabase.auth.signIn({
-      google,
+      google
     });
     if (error) {
       return next(new AppError(error.message, 401));

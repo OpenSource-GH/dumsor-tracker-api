@@ -6,14 +6,12 @@ const userRouter = require('./routes/userRoutes.js');
 
 const app = express();
 
-const supabaseUrl = '';
-// console.log('SUPABASE_URL', supabaseUrl);
-const supabaseAnonKey = '';
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
 
 module.exports.supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 app.use(express.json());
-
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
