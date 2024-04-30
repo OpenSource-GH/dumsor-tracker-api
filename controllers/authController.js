@@ -1,10 +1,11 @@
 const User = require('./../models/userModel');
 const AppError = require('./../utils/appError');
-const { createClient } = require('@supabase/supabase-js');
+const { createClient } = require('@supabase/supabase-js')
+const dotenv = require('dotenv');
 
-const supabaseUrl = '';
-const supabaseAnonKey ='';
-  '';
+dotenv.config()
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 exports.signup = async (req, res, next) => {

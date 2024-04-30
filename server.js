@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const app = require('./app');
-// const { createClient } = require('@supabase/supabase-js');
 
-dotenv.config({ path: './config.env' });
+dotenv.config();
+
 const DB = process.env.DATABASE.replace(
   '<PASSWORD>',
   process.env.DATABASE_PASSWORD,
@@ -17,7 +17,8 @@ mongoose
   .then(() => console.log('DB Connection Successful'))
   .catch((err) => console.error('DB Connection Error:', err));
 
-const port = process.env.PORT || 6000;
+const port =  6000;
+
 app.listen(port, () => {
-  console.log('Dumsor-Tracker running on port ${port}.... ');
+  console.log(`Dumsor-Tracker running on port ${port}.... `);
 });
