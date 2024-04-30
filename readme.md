@@ -1,15 +1,15 @@
 ## Dumsor Tracker API
 
 ### Overview
-The Dumsor Tracker API project aims to monitor and analyze power outage patterns across the country.
+The Dumsor Tracker project aims to monitor and analyze power outage patterns across the country.
 
-### Technology Stack
+### Backend Technology Stack
 - Node.js with Express
 - MongoDB (Primary DB)
 - Supabase (BaaS) - for auth.
 
 ### Features
--  Track power outages and durations.
+- Track power outages and durations.
 - View historical data of power outages.
 - Manage user schedules and notifications.
 
