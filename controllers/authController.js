@@ -27,14 +27,17 @@ exports.signup = async (req, res, next) => {
 };
 
 exports.login = async (req, res, next) => {
-  const { google } = req.body;
+  const { email, password } = req.body;
   try {
     const { user, session, error } = await supabase.auth.signIn({
-      google
+      email,
+      password,
     });
+
     if (error) {
       return next(new AppError(error.message, 401));
     }
+
     res.status(200).json({
       status: 'success',
       data: {
