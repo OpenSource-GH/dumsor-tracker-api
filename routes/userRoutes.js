@@ -9,6 +9,7 @@ const userRouter = express.Router();
 
 userRouter.route('/signup').post(authController.signup);
 userRouter.route('/login').post(authController.login);
+userRouter.route('/google-login').post(authController.googleLogin);
 userRouter.route('/logout').post(authController.logout);
 
 userRouter
