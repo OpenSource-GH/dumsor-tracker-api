@@ -50,6 +50,27 @@ exports.login = async (req, res, next) => {
   }
 };
 
+exports.googleLogin = async (req, res, next) => {
+  const { google } = req.body;
+  try {
+    const { user, session, error } = await supabase.auth.signIn({
+      google
+    });
+    if (error) {
+      return next(new AppError(error.message, 401));
+    }
+    res.status(200).json({
+      status: 'success',
+      data: {
+        session,
+        user,
+      },
+    });
+  } catch (err) {
+    return next(new AppError('Failed to log in user', 500));
+  }
+};
+
 exports.logout = async (req, res, next) => {
   try {
     const { error } = await supabase.auth.signOut();
