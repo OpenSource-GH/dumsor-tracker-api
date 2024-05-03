@@ -10,7 +10,7 @@ const logRouter = express.Router();
 
 logRouter.param('id', checkID);
 
-logRouter.route('/').get(protect, logController.getAllLogs).post(
+logRouter.route('/').get(logController.getAllLogs).post(
   //logController.checkBody,
   logController.createLog
 );
