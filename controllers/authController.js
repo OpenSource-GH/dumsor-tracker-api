@@ -46,6 +46,7 @@ exports.login = async (req, res, next) => {
       },
     });
   } catch (err) {
+    console.log(err)
     return next(new AppError('Failed to log in user', 500));
   }
 };
