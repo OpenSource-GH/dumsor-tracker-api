@@ -17,11 +17,12 @@ exports.getAllLogs = catchAsync(async (req, res, next) => {
   const skip = (page - 1) * pageSize;
 
   try {
-    // Find all logs with pagination
-    const logs = await Log.find().skip(skip).limit(pageSize);
+    const userId = req.user.id;
+    // Find all logs belonging to the authenticated user with pagination
+    const logs = await Log.find({ userId: userId }).skip(skip).limit(pageSize);
 
     // Calculate the total number of logs
-    const totalLogs = await Log.countDocuments();
+    const totalLogs = await Log.countDocuments({ userId: userId });
 
     // Send response with pagination information
     res.status(200).json({
