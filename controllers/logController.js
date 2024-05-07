@@ -16,11 +16,18 @@ exports.getAllLogs = catchAsync(async (req, res, next) => {
   const skip = (page - 1) * pageSize;
 
   try {
+
+    let query = {};
+    // Check if query is provided
+    if (req.query.location) {
+      query = { location: req.query.location };
+    }    
+    
     // Find all logs with pagination
-    const logs = await Log.find().skip(skip).limit(pageSize);
+    const logs = await Log.find(query).skip(skip).limit(pageSize);
 
     // Calculate the total number of logs
-    const totalLogs = await Log.countDocuments();
+    const totalLogs = await Log.countDocuments(query);
 
     // Send response with pagination information
     res.status(200).json({
