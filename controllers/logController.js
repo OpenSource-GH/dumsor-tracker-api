@@ -24,7 +24,7 @@ exports.getAllLogs = catchAsync(async (req, res, next) => {
     }    
     
     // Find all logs with pagination
-    const logs = await Log.find(query).skip(skip).limit(pageSize);
+    const logs = await Log.find(query).skip(skip).limit(pageSize).sort({createdAt: -1 });
 
     // Calculate the total number of logs
     const totalLogs = await Log.countDocuments(query);
