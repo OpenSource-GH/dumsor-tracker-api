@@ -20,7 +20,9 @@ exports.getAllLogs = catchAsync(async (req, res, next) => {
     let query = {};
     // Check if query is provided
     if (req.query.location) {
-      query = { location: req.query.location };
+      const locationRegex = new 
+      RegExp(req.query.location, 'i');
+      query = { location: { $regex: locationRegex } };
     }    
     
     // Find all logs with pagination
