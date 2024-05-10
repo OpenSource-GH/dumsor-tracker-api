@@ -1,22 +1,17 @@
 const mongoose = require('mongoose');
 
-//moved checkObject id logic to a middleware instead of being in a controller
+// Middleware to check if the provided ID is a valid MongoDB object ID
 exports.checkID = (req, res, next) => {
   const id = req.params.id;
 
-  if (id * 1 > logs.length) {
+  // Check if the ID is a valid MongoDB object ID
+  if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({
       status: 'fail',
       message: 'Invalid object ID',
     });
   }
 
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({
-      status: 'fail',
-      message: 'Invalid object Id',
-    });
-  }
-
   next();
 };
+
