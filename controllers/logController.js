@@ -1,38 +1,24 @@
-const fs = require('fs');
-const mongoose = require('mongoose');
-const logRouter = require('../routes/logRoutes');
 const Log = require('../models/logModel');
-const { Types } = require('mongoose');
-const filePath = './dev-data/logs-simple.json';
-const logs = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
 const catchAsync = require('./../utils/catchAsync');
 
 exports.getAllLogs = catchAsync(async (req, res, next) => {
-  // Set default values for page and pageSize
   const page = parseInt(req.query.page, 10) || 1;
   const pageSize = parseInt(req.query.pageSize, 10) || 10;
 
-  // Calculate the skip based on the page and pageSize
   const skip = (page - 1) * pageSize;
 
   try {
     let query = {};
-    // Check if query is provided
     if (req.query.location) {
       const locationRegex = new RegExp(req.query.location, 'i');
       query = { location: { $regex: locationRegex } };
     }
-
-    // Find all logs with pagination
     const logs = await Log.find(query)
       .skip(skip)
       .limit(pageSize)
       .sort({ createdAt: -1 });
 
-    // Calculate the total number of logs
     const totalLogs = await Log.countDocuments(query);
-
-    // Send response with pagination information
     res.status(200).json({
       status: 'Success',
       data: {
