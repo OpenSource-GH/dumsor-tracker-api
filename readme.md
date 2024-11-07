@@ -1,9 +1,9 @@
-## Dumsor Tracker API
+## Dumsor Tracker Backend
 
 ### Overview
 The Dumsor Tracker project aims to monitor and analyze power outage patterns across the country.
 
-### Backend Technology Stack
+### Backend Stack
 - Node.js with Express
 - MongoDB (Primary DB)
 - Supabase (BaaS) - for auth.
