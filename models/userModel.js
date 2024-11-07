@@ -3,12 +3,12 @@ const validator = require('validator');
 const { PhoneNumberUtil } = require('libphonenumber-js');
 
 const userSchema = new mongoose.Schema({
-  _id: {
-    type: mongoose.Schema.Types.ObjectId,
-    auto: true,
-    required: [true, 'A user must have an id'],
-    unique: true,
-  },
+  // _id: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   auto: true,
+  //   required: [true, 'A user must have an id'],
+  //   unique: true,
+  // },
   name: {
     type: String,
     required: [true, 'Make your name  known'],
