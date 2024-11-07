@@ -15,6 +15,10 @@ const logSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  userId: {
+    type: String,
+    required: true,
+  },
   timeOff: {
     type: String,
     required: true,
