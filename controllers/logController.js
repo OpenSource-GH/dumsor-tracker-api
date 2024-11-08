@@ -87,7 +87,7 @@ exports.createLog = catchAsync(async (req, res, next) => {
 
 exports.updateLog = catchAsync(async (req, res, next) => {
   try {
-    const log = await Log.findByIdAndUpdate(req.params.id, req.body);
+    const log = await Log.findByIdAndUpdate(req.params.id, req.body, {new: true});
     if (!log) {
       return res.status(404).json({
         status: 'fail',
@@ -101,7 +101,7 @@ exports.updateLog = catchAsync(async (req, res, next) => {
       },
     });
   } catch (err) {
-    res.status(400).json({
+    res.status(500).json({
       status: 'fail',
       message: err.message,
     });
@@ -122,7 +122,7 @@ exports.deleteLog = catchAsync(async (req, res, next) => {
       data: null,
     });
   } catch (err) {
-    res.status(400).json({
+    res.status(500).json({
       status: 'fail',
       message: err.message,
     });
