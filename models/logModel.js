@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 
 const logSchema = new mongoose.Schema({
+  id: {
+    type: String,
+    unique: true,
+    default: () => new mongoose.Types.ObjectId().toString(),
+  },
   location: {
     type: String,
     required: true,
@@ -19,9 +24,8 @@ const logSchema = new mongoose.Schema({
   },
   createdAt: {
     type: Date,
-    default: Date.now
-  }
-  
+    default: Date.now,
+  },
 });
 
 const Log = mongoose.model('Log', logSchema);
