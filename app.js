@@ -19,4 +19,9 @@ app.use((req, res, next) => {
 app.use('/api/v1/logs', logRouter);
 app.use('/api/v1/users', userRouter);
 
+//root url
+app.get('/', (req, res) => {
+  res.send('Server Up!');
+});
+
 module.exports = app;
