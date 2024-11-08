@@ -1,17 +1,7 @@
 const mongoose = require('mongoose');
 
 const logSchema = new mongoose.Schema({
-  id: {
-    type: mongoose.Schema.Types.ObjectId,
-    auto: true,
-    required: [true, 'A Log must have an id'],
-    unique: true,
-  },
   location: {
-    type: String,
-    required: true,
-  },
-  userId: {
     type: String,
     required: true,
   },
