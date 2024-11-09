@@ -6,23 +6,10 @@
     "mocha": true
   },
   "rules": {
-    "semi": [
-      2,
-      "always"
-    ],
+    "semi": [2, "always"],
     "require-yield": 0,
-    //    "strict": ["error", "global"],
-    "quotes": [
-      "error",
-      "single",
-      {
-        "avoidEscape": true
-      }
-    ],
-    "space-before-function-paren": [
-      "warn",
-      "never"
-    ],
+    "quotes": ["error", "single", { "avoidEscape": true }],
+    "space-before-function-paren": ["warn", "never"],
     "no-unused-vars": "warn"
   }
 }
