@@ -24,13 +24,14 @@
     "mongoose": "^8.3.2",
     "morgan": "^1.10.0",
     "nodemon": "^3.1.0",
+    "redis": "^4.7.0",
     "supabase": "^1.163.2",
     "validator": "^13.11.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.2.2",
     "@commitlint/config-conventional": "^19.2.2",
-    "eslint": "^8.57.0",
+    "eslint": "^8.57.1",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^5.1.3",
