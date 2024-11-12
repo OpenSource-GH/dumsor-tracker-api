@@ -1,7 +1,11 @@
 const Log = require('../models/logModel');
+const redisClient = require('./redisClient');
 const catchAsync = require('./../utils/catchAsync');
 
+const CACHE_TTL=3600
+
 exports.getAllLogs = catchAsync(async (req, res, next) => {
+  const redis = redisClient.getClient();
   const page = parseInt(req.query.page, 10) || 1;
   const pageSize = parseInt(req.query.pageSize, 10) || 10;
 
