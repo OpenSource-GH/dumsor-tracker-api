@@ -2,7 +2,7 @@ const Log = require('../models/logModel');
 const redisClient = require('../redisClient');
 const catchAsync = require('./../utils/catchAsync');
 
-const CACHE_TTL=3600
+const CACHE_TTL = 3600;
 
 exports.getAllLogs = catchAsync(async (req, res, next) => {
   const redis = redisClient.getClient();
@@ -12,21 +12,27 @@ exports.getAllLogs = catchAsync(async (req, res, next) => {
 
   try {
     const cacheKey = `logs:${page}:${pageSize}:${req.query.location || 'all'}`;
-    
 
+    const cachedData = await redis.get(cacheKey);
+    if (cachedData) {
+      return res.status(200).json(JSON.parse(cachedData));
+    }
 
+    //If no catch, query the db
     let query = {};
     if (req.query.location) {
-      const locationRegex = new RegExp(req.query.location, 'i');
-      query = { location: { $regex: locationRegex } };
+      query = { location: { $regex: new RegExp(req.query.location, 'i') }};
     }
-    const logs = await Log.find(query)
-      .skip(skip)
-      .limit(pageSize)
-      .sort({ createdAt: -1 });
 
-    const totalLogs = await Log.countDocuments(query);
-    res.status(200).json({
+    const [logs, totalLogs] = await Promise.all([
+      Log.find(query)
+       .skip(skip)
+       .limit(pageSize)
+       .sort({ createdAt: -1 }),
+      Log.countDocuments(query)
+    ]);
+    
+    const response = {
       status: 'Success',
       data: {
         results: logs.length,
@@ -34,9 +40,11 @@ exports.getAllLogs = catchAsync(async (req, res, next) => {
         page,
         pageSize,
         totalLogs,
-      },
-    });
-  } catch (err) {
+      }
+    };
+  } 
+  
+  catch (err) {
     res.status(404).json({
       status: 'fail',
       message: err.message,
@@ -91,10 +99,11 @@ exports.createLog = catchAsync(async (req, res, next) => {
   }
 });
 
-
 exports.updateLog = catchAsync(async (req, res, next) => {
   try {
-    const log = await Log.findByIdAndUpdate(req.params.id, req.body, {new: true});
+    const log = await Log.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
     if (!log) {
       return res.status(404).json({
         status: 'fail',
