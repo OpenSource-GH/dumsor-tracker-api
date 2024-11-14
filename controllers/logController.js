@@ -42,9 +42,11 @@ exports.getAllLogs = catchAsync(async (req, res, next) => {
         totalLogs,
       }
     };
-  } 
-  
-  catch (err) {
+
+    await redis.setEx(cacheKey, CACHE_TTL, JSON.stringify(response));
+    res.status(200).json(response);
+    
+  } catch (err) {
     res.status(404).json({
       status: 'fail',
       message: err.message,
