@@ -21,17 +21,14 @@ exports.getAllLogs = catchAsync(async (req, res, next) => {
     //If no catch, query the db
     let query = {};
     if (req.query.location) {
-      query = { location: { $regex: new RegExp(req.query.location, 'i') }};
+      query = { location: { $regex: new RegExp(req.query.location, 'i') } };
     }
 
     const [logs, totalLogs] = await Promise.all([
-      Log.find(query)
-       .skip(skip)
-       .limit(pageSize)
-       .sort({ createdAt: -1 }),
-      Log.countDocuments(query)
+      Log.find(query).skip(skip).limit(pageSize).sort({ createdAt: -1 }),
+      Log.countDocuments(query),
     ]);
-    
+
     const response = {
       status: 'Success',
       data: {
@@ -40,12 +37,11 @@ exports.getAllLogs = catchAsync(async (req, res, next) => {
         page,
         pageSize,
         totalLogs,
-      }
+      },
     };
 
     await redis.setEx(cacheKey, CACHE_TTL, JSON.stringify(response));
     res.status(200).json(response);
-    
   } catch (err) {
     res.status(404).json({
       status: 'fail',
@@ -56,6 +52,7 @@ exports.getAllLogs = catchAsync(async (req, res, next) => {
 
 exports.getLog = catchAsync(async (req, res, next) => {
   try {
+
     const log = await Log.findById(req.params.id);
     if (!log) {
       return res.status(404).json({
@@ -80,6 +77,8 @@ exports.getLog = catchAsync(async (req, res, next) => {
 exports.createLog = catchAsync(async (req, res, next) => {
   try {
     const { location, date, timeOff, timeBackOn, userId } = req.body;
+
+    // Create new log in database
     const newLog = await Log.create({
       location,
       date,
@@ -87,6 +86,13 @@ exports.createLog = catchAsync(async (req, res, next) => {
       timeBackOn,
       userId,
     });
+    const redis = redisClient.getClient();
+    try {
+      await redis.set(`log:${newLog._id}`, CACHE_TTL, JSON.stringify(newLog));
+      await redis.del('logs:all');
+    } catch (redisError) {
+      console.error('Redis caching error:', redisError);
+    }
     res.status(201).json({
       status: 'success',
       data: {
