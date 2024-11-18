@@ -77,8 +77,6 @@ exports.getLog = catchAsync(async (req, res, next) => {
 exports.createLog = catchAsync(async (req, res, next) => {
   try {
     const { location, date, timeOff, timeBackOn, userId } = req.body;
-
-    // Create new log in database
     const newLog = await Log.create({
       location,
       date,
