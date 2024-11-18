@@ -6,28 +6,40 @@ const CACHE_TTL = 3600;
 
 exports.getAllLogs = catchAsync(async (req, res, next) => {
   const redis = redisClient.getClient();
-  const page = parseInt(req.query.page, 10) || 1;
-  const pageSize = parseInt(req.query.pageSize, 10) || 10;
+  const page = Math.max(1, parseInt(req.query.page, 10) || 1);
+  const pageSize = Math.min(100, Math.max(1, parseInt(req.query.pageSize, 10) || 10));
   const skip = (page - 1) * pageSize;
+  const location = req.query.location ? req.query.location.trim() : null;
+
+  const cacheKey = `logs:${page}:${pageSize}:${location || 'all'}`;
 
   try {
-    const cacheKey = `logs:${page}:${pageSize}:${req.query.location || 'all'}`;
-
     const cachedData = await redis.get(cacheKey);
     if (cachedData) {
       return res.status(200).json(JSON.parse(cachedData));
     }
+    const query = location 
+      ? { location: { $regex: new RegExp(`^${escapeRegExp(location)}`, 'i') } }
+      : {};
 
-    //If no catch, query the db
-    let query = {};
-    if (req.query.location) {
-      query = { location: { $regex: new RegExp(req.query.location, 'i') } };
-    }
-
-    const [logs, totalLogs] = await Promise.all([
-      Log.find(query).skip(skip).limit(pageSize).sort({ createdAt: -1 }),
-      Log.countDocuments(query),
+    const [results] = await Log.aggregate([
+      { $match: query },
+      { $sort: { createdAt: -1 } },
+      { 
+        $facet: {
+          logs: [
+            { $skip: skip },
+            { $limit: pageSize }
+          ],
+          totalLogs: [
+            { $count: 'count' }
+          ]
+        }
+      }
     ]);
+
+    const logs = results.logs;
+    const totalLogs = results.totalLogs[0]?.count || 0;
 
     const response = {
       status: 'Success',
@@ -39,16 +51,16 @@ exports.getAllLogs = catchAsync(async (req, res, next) => {
         totalLogs,
       },
     };
-
     await redis.setEx(cacheKey, CACHE_TTL, JSON.stringify(response));
+    
     res.status(200).json(response);
   } catch (err) {
-    res.status(404).json({
-      status: 'fail',
-      message: err.message,
-    });
+    next(new AppError(err.message, 500));
   }
 });
+function escapeRegExp(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
 
 exports.getLog = catchAsync(async (req, res, next) => {
   try {
