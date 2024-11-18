@@ -3,7 +3,7 @@ const redis = require('redis');
 class RedisClient {
   constructor() {
     this.client = redis.createClient({
-      url: process.env.REDIS_URL || 'redis://localhost:6379',
+      url: process.env.REDIS_URL,
       socket: {
         reconnectStrategy: (retries) => {
           return Math.min(1000 * Math.pow(2, retries), 10000);
